@@ -21,6 +21,7 @@ package org.deeplearning4j.nn.layers.convolution.upsampling;
 import lombok.extern.slf4j.Slf4j;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
 import org.deeplearning4j.nn.conf.layers.BaseUpsamplingLayer;
+import org.deeplearning4j.nn.conf.layers.Subsampling1DLayer;
 import org.deeplearning4j.nn.gradient.Gradient;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.primitives.Pair;
@@ -48,7 +49,6 @@ public class Upsampling1D extends Upsampling2D {
         super(conf, input);
     }
 
-
     @Override
     public Pair<Gradient, INDArray> backpropGradient(INDArray epsilon) {
 
@@ -74,6 +74,11 @@ public class Upsampling1D extends Upsampling2D {
     @Override
     public INDArray preOutput(boolean training) {
         return preOutput(training, false);
+    }
+
+    @Override
+    protected int getSize(){
+        return ((org.deeplearning4j.nn.conf.layers.Upsampling1D)conf.getLayer()).getSize();
     }
 
     public INDArray preOutput(boolean training, boolean forBackprop) {

@@ -84,7 +84,7 @@ public class Upsampling2D extends AbstractLayer<org.deeplearning4j.nn.conf.layer
         int inH = input.size(2);
         int inW = input.size(3);
 
-        int size = layerConf().getSize();
+        int size = getSize();
 
         INDArray outEpsilon = Nd4j.createUninitialized(miniBatch * inDepth * inH * inW);
         INDArray reshapedEpsilon = outEpsilon.reshape('c', miniBatch, inDepth, inH, inW);
@@ -109,6 +109,10 @@ public class Upsampling2D extends AbstractLayer<org.deeplearning4j.nn.conf.layer
         return preOutput(training, false);
     }
 
+    protected int getSize(){
+        return layerConf().getSize();
+    }
+
     public INDArray preOutput(boolean training, boolean forBackprop) {
         applyDropOutIfNecessary(training);
 
@@ -128,7 +132,7 @@ public class Upsampling2D extends AbstractLayer<org.deeplearning4j.nn.conf.layer
         int inH = input.size(2);
         int inW = input.size(3);
 
-        int size = layerConf().getSize();
+        int size = getSize();
         int outH = inH * size;
         int outW = inW * size;
 
